@@ -1,42 +1,38 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "E-commerce Documentation",
+        "title": "E-Learning System Documentation",
         "version": "1.0.0"
     },
     "paths": {
-        "/api/login": {
+        "/api/category_create": {
             "post": {
                 "tags": [
-                    "auth"
+                    "category"
                 ],
-                "summary": "Sign in",
-                "description": "Login by email, password",
-                "operationId": "authLogin",
+                "summary": "new category",
+                "description": "store new category",
+                "operationId": "create",
                 "requestBody": {
-                    "description": "Pass user credentials",
+                    "description": "Pass new category name",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "email",
-                                    "password"
+                                    "name",
+                                    "parent_id"
                                 ],
                                 "properties": {
-                                    "email": {
+                                    "name": {
                                         "type": "string",
-                                        "format": "email",
-                                        "example": "user1@mail.com"
+                                        "format": "string",
+                                        "example": "software"
                                     },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    },
-                                    "persistent": {
-                                        "type": "boolean",
-                                        "example": "true"
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -51,8 +47,9 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "user": {
-                                            "$ref": "#/components/schemas/User"
+                                        "message": {
+                                            "type": "string",
+                                            "example": "category created"
                                         }
                                     },
                                     "type": "object"
@@ -61,14 +58,863 @@
                         }
                     },
                     "422": {
-                        "description": "Wrong credentials response",
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid category name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/category_update": {
+            "post": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "new category",
+                "description": "update category",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "update category name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "parent_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "software"
+                                    },
+                                    "parent_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Sorry, wrong email address or password. Please try again"
+                                            "example": "category updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid category name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permmision_create": {
+            "post": {
+                "tags": [
+                    "permission"
+                ],
+                "summary": "new permmision",
+                "description": "store new permission",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "Pass new permission name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "create admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission created"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid input"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permmision_update": {
+            "post": {
+                "tags": [
+                    "permission"
+                ],
+                "summary": "update permmision",
+                "description": "update permission",
+                "operationId": "update",
+                "requestBody": {
+                    "description": "update permission name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "update admin"
+                                    },
+                                    "permission_id": {
+                                        "type": "number",
+                                        "format": "number",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid input"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permmision_view": {
+            "post": {
+                "tags": [
+                    "permission"
+                ],
+                "summary": "view permmision",
+                "description": "view permission",
+                "operationId": "view",
+                "requestBody": {
+                    "description": "return permission ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "number",
+                                        "format": "number",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid permission_id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permmision_delete": {
+            "post": {
+                "tags": [
+                    "permission"
+                ],
+                "summary": "delete permmision",
+                "description": "delete permission",
+                "operationId": "delete",
+                "requestBody": {
+                    "description": "return permission ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permission_id"
+                                ],
+                                "properties": {
+                                    "permission_id": {
+                                        "type": "number",
+                                        "format": "number",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "permission deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid permission_id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permmision_index": {
+            "post": {
+                "tags": [
+                    "permission"
+                ],
+                "summary": "all permmision",
+                "description": "all permissions",
+                "operationId": "all",
+                "requestBody": {
+                    "description": "",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    ""
+                                ],
+                                "properties": {
+                                    "": {
+                                        "type": "",
+                                        "format": "",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "all permissions"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid input"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/question_create": {
+            "post": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "new topic",
+                "description": "store new question",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "Pass new question",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "question",
+                                    "topic_id",
+                                    "difficulty"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "why.....?"
+                                    },
+                                    "topic_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    },
+                                    "difficulty": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "question created"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid question name"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role_create": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "create",
+                "description": "create new role",
+                "operationId": "",
+                "requestBody": {
+                    "description": "valid role title",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "admin"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "role title already exist",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong Role title, Role title already exist"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role_update": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Update Role",
+                "description": "Update Role",
+                "operationId": "",
+                "requestBody": {
+                    "description": "valid role title",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "user"
+                                    },
+                                    "role_id": {
+                                        "type": "number",
+                                        "format": "number",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid role_id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "invalid role_id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "205": {
+                        "description": "You have No roles to show",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You have No roles to show"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role_view": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "get role by id",
+                "description": "get role by id",
+                "operationId": "",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid Role Id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "invalid Role Id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "205": {
+                        "description": "You have No roles to show",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "You have No roles to show"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role_delete": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "delete role",
+                "description": "delete role",
+                "operationId": "delete",
+                "requestBody": {
+                    "description": "return role ",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "role_id"
+                                ],
+                                "properties": {
+                                    "role_id": {
+                                        "type": "number",
+                                        "format": "number",
+                                        "example": "10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "role deleted"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid role_id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/role_index": {
+            "post": {
+                "tags": [
+                    "Role"
+                ],
+                "summary": "Get All Role",
+                "description": "Get All Role",
+                "operationId": "",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "role": {
+                                            "$ref": "#/components/schemas/Role"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/topic_create": {
+            "post": {
+                "tags": [
+                    "Topic"
+                ],
+                "summary": "new topic",
+                "description": "store new topic",
+                "operationId": "create",
+                "requestBody": {
+                    "description": "Pass new topic name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "category_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "laravel"
+                                    },
+                                    "category_id": {
+                                        "type": "integer",
+                                        "format": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "topic created"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "invalid input",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validation error": {
+                                            "type": "string",
+                                            "example": "Sorry, invalid topic name"
                                         }
                                     },
                                     "type": "object"
@@ -153,10 +999,211 @@
                     }
                 }
             }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    },
+                                    "persistent": {
+                                        "type": "boolean",
+                                        "example": "true"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "$ref": "#/components/schemas/User"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Wrong credentials response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sorry, wrong email address or password. Please try again"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Logout",
+                "description": "Logout user and invalidate token",
+                "operationId": "authLogout",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "401": {
+                        "description": "Returns when user is not authenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Not authorized"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/profile": {
+            "get": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "return profile of user",
+                "operationId": "Profile",
+                "parameters": [
+                    {
+                        "name": "User_ID",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/api/Edit_profile": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Edit profile of user",
+                "operationId": "Profile",
+                "parameters": [
+                    {
+                        "name": "User_ID",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "RolePermission": {
+                "required": [
+                    "role_id",
+                    "permission_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "role_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "permission_id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "RolePermission"
+                }
+            },
+            "Role": {
+                "required": [
+                    "title"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "readOnly": "true",
+                        "example": "1"
+                    },
+                    "title": {
+                        "description": "Role unique name ",
+                        "type": "string",
+                        "readOnly": "true",
+                        "example": "admin"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Role"
+                }
+            },
             "User": {
                 "required": [
                     "password"
